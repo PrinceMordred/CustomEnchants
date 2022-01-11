@@ -13,18 +13,27 @@ import java.util.HashMap;
 
 public final class CustomEnchants extends JavaPlugin {
 
+
     static CustomEnchants plugin;
+    public ArrayList<Enchantment> Enchants;
     public static Hemorrhage_Axe hemorrhage_axe;
     public static Grappling_Hook_Fishing_Rod grappling_hook_fishing_rod;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
-        hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
-        grappling_hook_fishing_rod = new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod");
+        Enchants = new ArrayList<Enchantment>(){
+            {
+                //add enchants here
+                add(new Hemorrhage_Axe("hemorrhage"));
+                add(new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod"));
 
-        registerEnchantment(hemorrhage_axe);
-        registerEnchantment(grappling_hook_fishing_rod);
+            }
+        };
+        for (int i =0; i< Enchants.size(); i++){
+            registerEnchantment(Enchants.get(i));
+        }
 
     }
 
@@ -38,11 +47,10 @@ public final class CustomEnchants extends JavaPlugin {
             @SuppressWarnings("unchecked")
             HashMap<NamespacedKey, Enchantment> byKey = (HashMap<NamespacedKey, Enchantment>) keyField.get(null);
 
-            if(byKey.containsKey(hemorrhage_axe.getKey())) {
-                byKey.remove(hemorrhage_axe.getKey());
-            }
-            if(byKey.containsKey(grappling_hook_fishing_rod.getKey())) {
-                byKey.remove(grappling_hook_fishing_rod.getKey());
+            for (Enchantment enchant : Enchants) {
+                if (byKey.containsKey(enchant.getKey())) {
+                    byKey.remove((enchant.getKey()));
+                }
             }
 
             Field nameField = Enchantment.class.getDeclaredField("byName");
@@ -51,11 +59,10 @@ public final class CustomEnchants extends JavaPlugin {
             @SuppressWarnings("unchecked")
             HashMap<String, Enchantment> byName = (HashMap<String, Enchantment>) nameField.get(null);
 
-            if(byName.containsKey(hemorrhage_axe.getName())) {
-                byName.remove(hemorrhage_axe.getName());
-            }
-            if(byName.containsKey(grappling_hook_fishing_rod.getName())) {
-                byName.remove(grappling_hook_fishing_rod.getName());
+            for (Enchantment enchant : Enchants) {
+                if (byName.containsKey((enchant.getName()))) {
+                    byName.remove((enchant.getName()));
+                }
             }
         } catch (Exception ignored) { }
 
