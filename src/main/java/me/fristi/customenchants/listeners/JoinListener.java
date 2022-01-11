@@ -25,6 +25,7 @@ public class JoinListener implements Listener {
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_PURPLE+ "Hemorrhage I");
         meta.setLore(lore);
+        axe.setItemMeta(meta);
         player.getInventory().setItemInMainHand(axe);
 
         ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
@@ -33,6 +34,7 @@ public class JoinListener implements Listener {
         lore.add(ChatColor.DARK_PURPLE+ "Grapple I");
         meta.setLore(lore);
         rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
+        rod.setItemMeta(meta);
         player.getInventory().addItem(rod);
         player.sendMessage(ChatColor.RED + "LMAO");
         System.out.println(ChatColor.RED +"LMAOOOOOOOOO");
