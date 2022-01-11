@@ -2,6 +2,7 @@ package me.fristi.customenchants;
 
 import me.fristi.customenchants.CEs.Grappling_Hook_Fishing_Rod;
 import me.fristi.customenchants.CEs.Hemorrhage_Axe;
+import me.fristi.customenchants.listeners.JoinListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
@@ -31,13 +32,15 @@ public final class CustomEnchants extends JavaPlugin {
                 //add enchants here
                 add(hemorrhage_axe);
                 add(grappling_hook_fishing_rod);
-
             }
         };
         for (Enchantment enchant : Enchants) {
             registerEnchantment(enchant);
         }
-
+        this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        //Register listener(s) in the enchantments
+        this.getServer().getPluginManager().registerEvents(hemorrhage_axe, this);
+        this.getServer().getPluginManager().registerEvents(grappling_hook_fishing_rod, this);
     }
 
     @Override
