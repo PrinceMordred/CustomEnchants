@@ -1,0 +1,4 @@
+name: CustomEnchants
+version: '${project.version}'
+main: me.fristi.customenchants.CustomEnchants
+api-version: 1.18
