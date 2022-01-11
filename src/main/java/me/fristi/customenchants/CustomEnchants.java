@@ -16,7 +16,7 @@ public final class CustomEnchants extends JavaPlugin {
 
 
     static CustomEnchants plugin;
-    public ArrayList<Enchantment> Enchants;
+    public ArrayList<Enchantment> Enchants = new ArrayList<>();
     public static Hemorrhage_Axe hemorrhage_axe;
     public static Grappling_Hook_Fishing_Rod grappling_hook_fishing_rod;
 
@@ -27,13 +27,10 @@ public final class CustomEnchants extends JavaPlugin {
         hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
         grappling_hook_fishing_rod =new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod");
 
-        Enchants = new ArrayList<Enchantment>(){
-            {
-                //add enchants here
-                add(hemorrhage_axe);
-                add(grappling_hook_fishing_rod);
-            }
-        };
+        Enchants.add(hemorrhage_axe);
+        Enchants.add(grappling_hook_fishing_rod);
+
+
         for (Enchantment enchant : Enchants) {
             registerEnchantment(enchant);
         }
