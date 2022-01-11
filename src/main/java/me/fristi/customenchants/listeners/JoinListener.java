@@ -34,7 +34,7 @@ public class JoinListener implements Listener {
         meta.setLore(lore);
         rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
         player.getInventory().addItem(rod);
-
+        player.sendMessage(ChatColor.RED + "LMAO");
         System.out.println(ChatColor.RED +"LMAOOOOOOOOO");
     }
 }
