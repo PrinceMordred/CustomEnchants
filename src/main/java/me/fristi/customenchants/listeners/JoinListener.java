@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.sound.midi.MetaEventListener;
 import java.io.Console;
@@ -25,7 +26,6 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        //Give the player an axe with the enchantment when they join
         Player player = e.getPlayer();
         ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
         ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
