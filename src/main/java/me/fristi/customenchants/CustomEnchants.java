@@ -1,5 +1,6 @@
 package me.fristi.customenchants;
 
+import me.fristi.customenchants.CEs.Grappling_Hook_Fishing_Rod;
 import me.fristi.customenchants.CEs.Hemorrhage_Axe;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,13 +15,16 @@ public final class CustomEnchants extends JavaPlugin {
 
     static CustomEnchants plugin;
     public static Hemorrhage_Axe hemorrhage_axe;
+    public static Grappling_Hook_Fishing_Rod grappling_hook_fishing_rod;
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
         hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
+        grappling_hook_fishing_rod = new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod");
 
         registerEnchantment(hemorrhage_axe);
+        registerEnchantment(grappling_hook_fishing_rod);
 
     }
 
