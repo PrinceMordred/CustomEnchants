@@ -41,6 +41,9 @@ public final class CustomEnchants extends JavaPlugin {
             if(byKey.containsKey(hemorrhage_axe.getKey())) {
                 byKey.remove(hemorrhage_axe.getKey());
             }
+            if(byKey.containsKey(grappling_hook_fishing_rod.getKey())) {
+                byKey.remove(grappling_hook_fishing_rod.getKey());
+            }
 
             Field nameField = Enchantment.class.getDeclaredField("byName");
 
@@ -51,7 +54,9 @@ public final class CustomEnchants extends JavaPlugin {
             if(byName.containsKey(hemorrhage_axe.getName())) {
                 byName.remove(hemorrhage_axe.getName());
             }
-
+            if(byName.containsKey(grappling_hook_fishing_rod.getName())) {
+                byName.remove(grappling_hook_fishing_rod.getName());
+            }
         } catch (Exception ignored) { }
 
 
