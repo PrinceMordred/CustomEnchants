@@ -32,7 +32,7 @@ public class JoinListener implements Listener {
         // Debug message to player:
         e.getEnchanter().sendMessage(ChatColor.RED + "HMM, enchanting are we now. Won't make your dick grow though. I'm sorry to disappoint you");
         // Offer enchantment when player tries to enchant a Diamond_Axe
-        if (e.getItem().equals(Material.DIAMOND_AXE)) {
+        if (e.getItem().getType().equals(Material.DIAMOND_AXE)) {
             e.getEnchanter().sendMessage(ChatColor.RED + "ah yes, a dia axe"); // Another debugging message
             e.getOffers()[Random(0, 2)] = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1, 1);
         }
