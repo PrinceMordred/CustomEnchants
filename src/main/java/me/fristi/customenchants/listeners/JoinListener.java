@@ -2,60 +2,54 @@ package me.fristi.customenchants.listeners;
 import me.fristi.customenchants.CustomEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
-import org.bukkit.enchantments.EnchantmentWrapper;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.sound.midi.MetaEventListener;
-import java.io.Console;
 import java.util.ArrayList;
-
-import static java.lang.Math.random;
 
 public class JoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        Player player = e.getPlayer();
-        ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
-        ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
-        ArrayList<String> lore = new ArrayList<>();
+        ItemStack axe = CreateEnchantedItemStack(Material.DIAMOND_AXE, CustomEnchants.hemorrhage_axe, 1, ChatColor.DARK_PURPLE+ "Hemorrhage I");
+        ItemStack rod = CreateEnchantedItemStack(Material.FISHING_ROD, CustomEnchants.grappling_hook_fishing_rod, 1, ChatColor.DARK_PURPLE+ "Grapple I");
 
-        axe.addUnsafeEnchantment(CustomEnchants.hemorrhage_axe, 1);
-        ItemMeta meta = axe.getItemMeta();
-        lore.add(ChatColor.DARK_PURPLE+ "Hemorrhage I");
-        meta.setLore(lore);
-        axe.setItemMeta(meta);
-
-        rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
-        meta = rod.getItemMeta();
-        lore = new ArrayList<>();
-        lore.add(ChatColor.DARK_PURPLE+ "Grapple I");
-        meta.setLore(lore);
-        rod.setItemMeta(meta);
-
-        player.getInventory().setItemInMainHand(axe);
-        player.getInventory().addItem(rod);
+        // Add items for debugging purposes to player's inventory
+        PlayerInventory playerInvent = e.getPlayer().getInventory();
+        playerInvent.setItemInMainHand(axe);
+        playerInvent.addItem(rod);
     }
     @EventHandler
     public void onPlayerEnchant(PrepareItemEnchantEvent e) { // !!!==Does not contain any random ints for chances==!!!
         // Debug message to player:
-        e.getEnchanter().sendMessage(ChatColor.MAGIC + "HMM, enchanting are we now. Won't make your dick grow");
+        e.getEnchanter().sendMessage(ChatColor.RED + "HMM, enchanting are we now. Won't make your dick grow though. I'm sorry to disappoint you");
         // Offer enchantment when player tries to enchant a Diamond_Axe
         if (e.getItem().equals(Material.DIAMOND_AXE)) {
-            e.getEnchanter().sendMessage(ChatColor.MAGIC + "ah yes, a dia axe"); // Another debugging message
+            e.getEnchanter().sendMessage(ChatColor.RED + "ah yes, a dia axe"); // Another debugging message
             e.getOffers()[Random(0, 2)] = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1, 1);
         }
+    }
+
+    ItemStack CreateEnchantedItemStack(Material m, Enchantment c, int level, String lore){
+        ItemStack itemstack = new ItemStack(m, 1);
+        ItemMeta meta = itemstack.getItemMeta();
+
+        // Set lore
+        List<String> Lore = new ArrayList<>();
+        Lore.add(lore);
+        meta.setLore(Lore);
+
+        //finish up
+        itemstack.addUnsafeEnchantment(c, level);
+        itemstack.setItemMeta(meta);
+        return itemstack;
     }
 
     private int Random(int a, int b) { return ThreadLocalRandom.current().nextInt(a, b); }
