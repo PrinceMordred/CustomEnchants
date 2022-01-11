@@ -1,6 +1,7 @@
 package me.fristi.customenchants;
 
 import me.fristi.customenchants.CEs.Hemorrhage_Axe;
+import me.fristi.customenchants.listeners.JoinListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
@@ -21,6 +22,8 @@ public final class CustomEnchants extends JavaPlugin {
         hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
 
         registerEnchantment(hemorrhage_axe);
+        this.getServer().getPluginManager().registerEvents(hemorrhage_axe, this);
+        this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
 
     }
 
