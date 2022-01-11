@@ -31,9 +31,8 @@ public final class CustomEnchants extends JavaPlugin {
         Enchants.add(grappling_hook_fishing_rod);
 
 
-        for (Enchantment enchant : Enchants) {
-            registerEnchantment(enchant);
-        }
+        registerEnchantment(hemorrhage_axe);
+        registerEnchantment(grappling_hook_fishing_rod);
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
         //Register listener(s) in the enchantments
         this.getServer().getPluginManager().registerEvents(hemorrhage_axe, this);
