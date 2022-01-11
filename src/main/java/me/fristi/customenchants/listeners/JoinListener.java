@@ -48,7 +48,7 @@ public class JoinListener implements Listener {
         player.getInventory().addItem(rod);
     }
     @EventHandler
-    public void onPlayerEnchant(PrepareItemEnchantEvent e) { // !!!==Does not contain any random ints==!!!
+    public void onPlayerEnchant(PrepareItemEnchantEvent e) { // !!!==Does not contain any random ints for chances==!!!
         // Debug message to player:
         e.getEnchanter().sendMessage(ChatColor.MAGIC + "HMM, enchanting are we now. Won't make your dick grow");
         // Offer enchantment when player tries to enchant a Diamond_Axe
