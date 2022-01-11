@@ -23,16 +23,19 @@ public final class CustomEnchants extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
+        hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
+        grappling_hook_fishing_rod =new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod");
+
         Enchants = new ArrayList<Enchantment>(){
             {
                 //add enchants here
-                add(new Hemorrhage_Axe("hemorrhage"));
-                add(new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod"));
+                add(hemorrhage_axe);
+                add(grappling_hook_fishing_rod);
 
             }
         };
-        for (int i =0; i< Enchants.size(); i++){
-            registerEnchantment(Enchants.get(i));
+        for (Enchantment enchant : Enchants) {
+            registerEnchantment(enchant);
         }
 
     }
@@ -60,9 +63,7 @@ public final class CustomEnchants extends JavaPlugin {
             HashMap<String, Enchantment> byName = (HashMap<String, Enchantment>) nameField.get(null);
 
             for (Enchantment enchant : Enchants) {
-                if (byName.containsKey((enchant.getName()))) {
-                    byName.remove((enchant.getName()));
-                }
+                byName.remove((enchant.getName()));
             }
         } catch (Exception ignored) { }
 

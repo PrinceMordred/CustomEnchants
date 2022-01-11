@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.sound.midi.MetaEventListener;
 import java.util.ArrayList;
 
 public class JoinListener implements Listener {
@@ -19,9 +20,17 @@ public class JoinListener implements Listener {
         Player player = e.getPlayer();
         ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
         axe.addUnsafeEnchantment(CustomEnchants.hemorrhage_axe, 1);
+        ItemMeta meta = axe.getItemMeta();
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_PURPLE+ "Hemorrhage I");
+        meta.setLore(lore);
         player.getInventory().setItemInMainHand(axe);
 
         ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
+        meta = rod.getItemMeta();
+        lore = new ArrayList<>();
+        lore.add(ChatColor.DARK_PURPLE+ "Grapple I");
+        meta.setLore(lore);
         rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
         player.getInventory().addItem(rod);
     }
