@@ -3,6 +3,7 @@ import me.fristi.customenchants.CustomEnchants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.EnchantmentOffer;
+import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +19,8 @@ import javax.sound.midi.MetaEventListener;
 import java.io.Console;
 import java.util.ArrayList;
 
+import static java.lang.Math.random;
+
 public class JoinListener implements Listener {
 
     @EventHandler
@@ -25,25 +28,40 @@ public class JoinListener implements Listener {
         //Give the player an axe with the enchantment when they join
         Player player = e.getPlayer();
         ItemStack axe = new ItemStack(Material.DIAMOND_AXE, 1);
+        ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
+        ArrayList<String> lore = new ArrayList<>();
+
         axe.addUnsafeEnchantment(CustomEnchants.hemorrhage_axe, 1);
         ItemMeta meta = axe.getItemMeta();
-        ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_PURPLE+ "Hemorrhage I");
         meta.setLore(lore);
         axe.setItemMeta(meta);
-        player.getInventory().setItemInMainHand(axe);
 
-        ItemStack rod = new ItemStack(Material.FISHING_ROD, 1);
+        rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
         meta = rod.getItemMeta();
         lore = new ArrayList<>();
         lore.add(ChatColor.DARK_PURPLE+ "Grapple I");
         meta.setLore(lore);
-        rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
         rod.setItemMeta(meta);
+
+        player.getInventory().setItemInMainHand(axe);
         player.getInventory().addItem(rod);
     }
     @EventHandler
-    public void onPlayerEnchant(PrepareItemEnchantEvent e){
+    public void onPlayerEnchant(PrepareItemEnchantEvent e) { // !!!==Does not contain any random ints==!!!
+        // Debug message to player:
+        e.getEnchanter().sendMessage(ChatColor.MAGIC + "HMM, enchanting are we now. Won't make your dick grow");
+        // Offer enchantment when player tries to enchant a Diamond_Axe
+        if (e.getItem().equals(Material.DIAMOND_AXE)) {
+            e.getEnchanter().sendMessage(ChatColor.MAGIC + "ah yes, a dia axe"); // Another debugging message
+            e.getOffers()[Random(0, 2)] = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1, 1);
+        }
+    }
+
+    private int Random(int a, int b) { return ThreadLocalRandom.current().nextInt(a, b); }
+}
+
+/*
         e.getEnchanter().sendMessage(ChatColor.MAGIC+ "HMM, enchanting are we now");
         EnchantmentOffer offer = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1,1);
         EnchantmentOffer offer2 = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 2,2);
@@ -53,8 +71,7 @@ public class JoinListener implements Listener {
         offers[1] = offer2;
         offers[2] = offer3;
         e = new PrepareItemEnchantEvent(e.getEnchanter(), (InventoryView) e.getInventory(), e.getEnchantBlock(), e.getItem(),offers, e.getEnchantmentBonus());
-        //EnchantItemEvent()
+        //EnchantItemEvent() ?
         e.getEnchanter().sendMessage(e.toString());
-    }
-}
+ */
 
