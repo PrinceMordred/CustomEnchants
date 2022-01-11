@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.sound.midi.MetaEventListener;
+import java.io.Console;
 import java.util.ArrayList;
 
 public class JoinListener implements Listener {
@@ -33,6 +34,8 @@ public class JoinListener implements Listener {
         meta.setLore(lore);
         rod.addUnsafeEnchantment(CustomEnchants.grappling_hook_fishing_rod, 1);
         player.getInventory().addItem(rod);
+
+        System.out.println(ChatColor.RED +"LMAOOOOOOOOO");
     }
 }
 
