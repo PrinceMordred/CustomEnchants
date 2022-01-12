@@ -69,19 +69,16 @@ public class CustomEnchants extends JavaPlugin {
 
     }
     //Load custom enchantments
-    public static void registerEnchantment(Enchantment enchantment) {
-        boolean registered = true;
+    public static void registerEnchantment(CEnchantment enchantment) {
         try {
-            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            Field f = CEnchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
-            Enchantment.registerEnchantment(enchantment);
-        } catch (Exception e) {
-            registered = false;
-            e.printStackTrace();
-        }
-        if(registered){
+            CEnchantment.registerEnchantment(enchantment);
             System.out.println("It's been registered!");
+        } catch (Exception e) {
+            System.out.println("It failed to register!");
+            e.printStackTrace();
         }
     }
 
