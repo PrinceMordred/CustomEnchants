@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 
 
-public final class CustomEnchants extends JavaPlugin {
+public class CustomEnchants extends JavaPlugin {
 
 
     static CustomEnchants plugin;
@@ -81,7 +81,7 @@ public final class CustomEnchants extends JavaPlugin {
             e.printStackTrace();
         }
         if(registered){
-            // It's been registered!
+            System.out.println("It's been registered!");
         }
     }
 
