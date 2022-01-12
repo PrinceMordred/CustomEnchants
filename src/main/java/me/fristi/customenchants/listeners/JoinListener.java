@@ -39,7 +39,8 @@ public class JoinListener implements Listener {
         // Offer enchantment when player tries to enchant a Diamond_Axe
         if (e.getItem().getType().equals(Material.DIAMOND_AXE)) {
             e.getEnchanter().sendMessage(ChatColor.RED + "ah yes, a dia axe"); // Another debugging message
-            e.getOffers()[Random(0, 2)] = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1, 1);
+            e.getOffers()[Random(0, 2)] = new EnchantmentOffer(Enchantment.KNOCKBACK, 3, 1);
+
         }
     }
 
@@ -56,14 +57,7 @@ public class JoinListener implements Listener {
         itemstack.addEnchantment(c, level);
         itemstack.setItemMeta(meta);
 
-        /*try {
-            Field f = Enchantment.class.getDeclaredField("acceptingNew");
-            f.setAccessible(true);
-            f.set(null, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        EnchantmentWrapper.registerEnchantment(c);*/
+        EnchantmentWrapper.registerEnchantment(c);
         return itemstack;
     }
 
