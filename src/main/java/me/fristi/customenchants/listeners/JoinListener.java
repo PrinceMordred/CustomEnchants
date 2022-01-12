@@ -32,17 +32,6 @@ public class JoinListener implements Listener {
         playerInvent.setItemInMainHand(axe);
         playerInvent.addItem(rod);
     }
-    @EventHandler
-    public void onPlayerEnchant(PrepareItemEnchantEvent e) { // !!!==Does not contain any random ints for chances==!!!
-        // Debug message to player:
-        e.getEnchanter().sendMessage(ChatColor.RED + "HMM, enchanting are we now. Won't make your dick grow though. I'm sorry to disappoint you");
-        // Offer enchantment when player tries to enchant a Diamond_Axe
-        if (e.getItem().getType().equals(Material.DIAMOND_AXE)) {
-            e.getEnchanter().sendMessage(ChatColor.RED + "ah yes, a dia axe"); // Another debugging message
-            e.getOffers()[Random(0, 2)] = new EnchantmentOffer(new EnchantmentWrapper("hemorrhage"), 6, 70);
-
-        }
-    }
 
     ItemStack CreateEnchantedItemStack(Material m, Enchantment c, int level, String lore){
         ItemStack itemstack = new ItemStack(m, 1);
@@ -50,7 +39,7 @@ public class JoinListener implements Listener {
 
         // Set lore
         List<String> Lore = new ArrayList<>();
-        Lore.add(lore);
+        Lore.add("Lore: " + lore);
         meta.setLore(Lore);
 
         //finish up
@@ -60,21 +49,5 @@ public class JoinListener implements Listener {
         EnchantmentWrapper.registerEnchantment(c);
         return itemstack;
     }
-
-    private int Random(int a, int b) { return ThreadLocalRandom.current().nextInt(a, b); }
 }
-
-/*
-        e.getEnchanter().sendMessage(ChatColor.MAGIC+ "HMM, enchanting are we now");
-        EnchantmentOffer offer = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 1,1);
-        EnchantmentOffer offer2 = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 2,2);
-        EnchantmentOffer offer3 = new EnchantmentOffer(CustomEnchants.hemorrhage_axe, 3,3);
-        EnchantmentOffer[] offers = new EnchantmentOffer[3];
-        offers[0] = offer;
-        offers[1] = offer2;
-        offers[2] = offer3;
-        e = new PrepareItemEnchantEvent(e.getEnchanter(), (InventoryView) e.getInventory(), e.getEnchantBlock(), e.getItem(),offers, e.getEnchantmentBonus());
-        //EnchantItemEvent() ?
-        e.getEnchanter().sendMessage(e.toString());
- */
 

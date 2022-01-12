@@ -1,7 +1,9 @@
 package me.fristi.customenchants;
 
+import me.fristi.customenchants.CEs.CEnchantment;
 import me.fristi.customenchants.CEs.Grappling_Hook_Fishing_Rod;
 import me.fristi.customenchants.CEs.Hemorrhage_Axe;
+import me.fristi.customenchants.listeners.EnchantListener;
 import me.fristi.customenchants.listeners.JoinListener;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,30 +12,28 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-
 public class CustomEnchants extends JavaPlugin {
 
 
     static CustomEnchants plugin;
     public ArrayList<Enchantment> Enchants = new ArrayList<>();
-    public static Hemorrhage_Axe hemorrhage_axe;
-    public static Grappling_Hook_Fishing_Rod grappling_hook_fishing_rod;
+    public static CEnchantment hemorrhage_axe;
+    public static CEnchantment grappling_hook_fishing_rod;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
-        hemorrhage_axe = new Hemorrhage_Axe("hemorrhage");
-        grappling_hook_fishing_rod =new Grappling_Hook_Fishing_Rod("grappling_hook_fishing_rod");
+        hemorrhage_axe = new Hemorrhage_Axe();
+        grappling_hook_fishing_rod =new Grappling_Hook_Fishing_Rod();
 
         Enchants.add(hemorrhage_axe);
         Enchants.add(grappling_hook_fishing_rod);
-
-
         registerEnchantment(hemorrhage_axe);
         registerEnchantment(grappling_hook_fishing_rod);
+
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EnchantListener(), this);
         //Register listener(s) in the enchantments
         this.getServer().getPluginManager().registerEvents(hemorrhage_axe, this);
         this.getServer().getPluginManager().registerEvents(grappling_hook_fishing_rod, this);

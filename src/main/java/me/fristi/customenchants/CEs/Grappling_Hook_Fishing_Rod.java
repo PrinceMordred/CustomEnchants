@@ -1,6 +1,7 @@
 package me.fristi.customenchants.CEs;
 
 import me.fristi.customenchants.CustomEnchants;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -10,57 +11,22 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Grappling_Hook_Fishing_Rod extends Enchantment implements Listener {
+import java.util.ArrayList;
 
-    public Grappling_Hook_Fishing_Rod(String Namespace){
-        super(new NamespacedKey(CustomEnchants.getPlugin(),Namespace));
+public class Grappling_Hook_Fishing_Rod extends CEnchantment implements Listener {
+    private ArrayList<Enchantment> enchantableItemStacks = new ArrayList<>();
+
+    public Grappling_Hook_Fishing_Rod() {
+        super("grappling_hook_fishing_rod", 1, 4, false, false,
+                null, null, new ItemStack[] { new ItemStack(Material.FISHING_ROD) });
+        enchantableItemStacks.add(this);
     }
+
+    public static boolean CanBeOn(ItemStack itemStack) { return itemStack.getType().equals(Material.FISHING_ROD); }
+
     @EventHandler
     public void OnPlayerHit(EntityDamageByEntityEvent e){
-        if(e.getDamager() instanceof Player){
-            Player player = (Player) e.getDamager();
-            if (player.getEquipment().getItemInMainHand().getEnchantments().containsKey(Enchantment.getByKey((CustomEnchants.grappling_hook_fishing_rod.getKey())))){
-                e.getEntity().setGlowing(true);
-            }
-        }
-    }
-    @Override
-    public String getName() {
-        return "Grappling Hook";
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
-
-    @Override
-    public int getStartLevel() {
-        return 1;
-    }
-
-    @Override
-    public EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.FISHING_ROD;
-    }
-
-    @Override
-    public boolean isTreasure() {
-        return false;
-    }
-
-    @Override
-    public boolean isCursed() {
-        return false;
-    }
-
-    @Override
-    public boolean conflictsWith(Enchantment other) {
-        return false;
-    }
-
-    @Override
-    public boolean canEnchantItem(ItemStack item) {
-        return true;
+        if(e.getDamager() instanceof Player player && HasEnchantment(player.getInventory().getItemInMainHand()))
+            e.getEntity().setGravity(false);
     }
 }
