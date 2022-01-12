@@ -21,8 +21,8 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        ItemStack axe = CreateEnchantedItemStack(Material.DIAMOND_AXE, new Hemorrhage_Axe("Test Hemorrhage"), 1, ChatColor.DARK_PURPLE+ "Hemorrhage I");
-        ItemStack rod = CreateEnchantedItemStack(Material.FISHING_ROD, new Grappling_Hook_Fishing_Rod("Test Rod"), 1, ChatColor.DARK_PURPLE+ "Grapple I");
+        ItemStack axe = CreateEnchantedItemStack(Material.DIAMOND_AXE, CustomEnchants.hemorrhage_axe, 1, ChatColor.DARK_PURPLE+ "Hemorrhage I");
+        ItemStack rod = CreateEnchantedItemStack(Material.FISHING_ROD, CustomEnchants.grappling_hook_fishing_rod, 1, ChatColor.DARK_PURPLE+ "Grapple I");
 
         // Add items for debugging purposes to player's inventory
         PlayerInventory playerInvent = e.getPlayer().getInventory();
