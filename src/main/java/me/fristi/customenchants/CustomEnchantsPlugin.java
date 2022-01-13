@@ -47,7 +47,8 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     public void onPlayerHit(EntityDamageByEntityEvent event){
         if(event.getDamager() instanceof Player player){
             if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
-                player.setVelocity(new Vector(100, 0, 100));
+                event.getEntity().setVelocity(new Vector(20, 30, 0));
+                event.getEntity().getWorld().strikeLightning(player.getTargetBlock(null, 0).getLocation());
             }
         }
     }
