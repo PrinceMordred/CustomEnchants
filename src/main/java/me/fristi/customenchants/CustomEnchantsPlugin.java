@@ -1,6 +1,7 @@
 package me.fristi.customenchants;
 
 import me.fristi.customenchants.CEs.CustomEnchants;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -10,16 +11,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.random.RandomGenerator;
 
@@ -44,9 +44,9 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event){
-        if(event.getDamager() instanceof Player){
-            if(((Player)(event.getDamager())).getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
-                event.getEntity().setGlowing(true);
+        if(event.getDamager() instanceof Player player){
+            if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
+                player.setFlySpeed(10000);
             }
         }
     }
@@ -69,11 +69,17 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         // Get current lore
         ItemStack item = event.getItem();
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = meta.getLore();
+        ArrayList<String> lore = new ArrayList<>();
         // Update lore
-        lore.add("Hemmorrhage 18+");
+        lore.add(ChatColor.DARK_PURPLE + "Hemorrhage XXX");
         meta.setLore(lore);
-        event.getItem().setItemMeta(meta);
+        item.setItemMeta(meta);
+    }
+    @EventHandler
+    public void grindStoneClick(InventoryClickEvent event) {
+        if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT) {
+            event.getCursor().getItemMeta().setLore(null);
+        }
     }
 
     private int Random(int min, int max){
