@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -46,7 +47,7 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     public void onPlayerHit(EntityDamageByEntityEvent event){
         if(event.getDamager() instanceof Player player){
             if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
-                player.setFlySpeed(10000);
+                player.setVelocity(new Vector(100, 0, 100));
             }
         }
     }
