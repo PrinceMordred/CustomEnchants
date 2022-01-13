@@ -7,6 +7,7 @@ import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -51,12 +52,17 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         }
     }
     @EventHandler
-    public void onEnchant(PrepareItemEnchantEvent event){
+    public void onPrepEnchant(PrepareItemEnchantEvent event){
         if(event.getEnchanter().getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_AXE)){
             event.getEnchanter().sendMessage("nice axe bro");
             event.getOffers()[1] = new EnchantmentOffer(Enchantment.DIG_SPEED, 7, 69);
         }
     }
+    @EventHandler
+    public void onEnchant(EnchantItemEvent event){
+            event.getEnchanter().sendMessage(event.toString());
+    }
+    
     public static CustomEnchantsPlugin getPlugin(){
         return plugin;
     }
