@@ -27,6 +27,8 @@ import java.util.random.RandomGenerator;
 
 public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
+    private int xpCost;
+    private int level;
     @Override
     public void onEnable() {
         CustomEnchants.register();
@@ -53,35 +55,37 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         }
     }
     @EventHandler
-    public void onPrepEnchant(PrepareItemEnchantEvent event){
-        event.getEnchanter().sendMessage("Enchanting");
-        if(event.getItem().getType().equals(Material.DIAMOND_AXE)){
-            if (Random(0, 100) < 100){ //50% kans
-                event.getOffers()[Random(0, 2)] = new EnchantmentOffer(Enchantment.BINDING_CURSE, 1, 69);
-                event.getEnchanter().sendMessage("Set EnchantmentOffer");
+    public void onPrepEnchant(PrepareItemEnchantEvent event) {
+        if (event.getItem().getType().equals(Material.DIAMOND_AXE)) {
+            level = 1;
+            xpCost = 69;
+            if (Random(0, 100) < 100) { //100% kans
+                event.getOffers()[Random(0, 2)] = new EnchantmentOffer(CustomEnchantsManager.HEMORRHAGE, level, xpCost);
             }
         }
     }
     @EventHandler
     public void onEnchant(EnchantItemEvent event){
         // Set enchantment
+        event.whichButton();
+        int diff = xpCost - event.getExpLevelCost();
+        event.getEnchanter().setExp(event.getEnchanter().getExp() - diff);
         Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
-        oldEnchantMap.put(CustomEnchants.HEMORRHAGE, 1);
+        oldEnchantMap.put(CustomEnchantsManager.HEMORRHAGE, level);
 
         // Get current lore
         ItemStack item = event.getItem();
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
         // Update lore
-        lore.add(ChatColor.DARK_PURPLE + "Hemorrhage XXX");
+        lore.add(ChatColor.DARK_PURPLE + "Hemorrhage "+ level);
         meta.setLore(lore);
         item.setItemMeta(meta);
     }
     @EventHandler
     public void grindStoneClick(InventoryClickEvent event) {
-        if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT) {
-            event.getCursor().getItemMeta().setLore(null);
-        }
+        if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT)
+            event.getCursor().getItemMeta().setLore(new ArrayList<>());
     }
 
     private int Random(int min, int max){
