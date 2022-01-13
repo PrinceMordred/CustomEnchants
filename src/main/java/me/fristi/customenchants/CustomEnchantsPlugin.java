@@ -1,10 +1,13 @@
 package me.fristi.customenchants;
 
 import me.fristi.customenchants.CEs.CustomEnchants;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,6 +42,13 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
             if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
                 event.getEntity().setGlowing(true);
             }
+        }
+    }
+    @EventHandler
+    public void onEnchant(PrepareItemEnchantEvent event){
+        if(event.getEnchanter().getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_AXE)){
+            event.getEnchanter().sendMessage("nice axe bro");
+            event.getOffers()[1] = new EnchantmentOffer(CustomEnchants.HEMORRHAGE, 1, 69);
         }
     }
     public static CustomEnchantsPlugin getPlugin(){
