@@ -15,15 +15,17 @@ public class CustomEnchants {
             registerEnchantment(HEMORRHAGE);
     }
     public static void registerEnchantment(Enchantment enchantment) {
+        boolean registered = true;
         try {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
             Enchantment.registerEnchantment(enchantment);
-            System.out.println("It's been registered!");
         } catch (Exception e) {
-            System.out.println("It failed to register!");
+            registered = false;
             e.printStackTrace();
         }
+        if (registered) System.out.println("Registered!");
+        else System.out.println("Did not register...");
     }
 }
