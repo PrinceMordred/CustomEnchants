@@ -40,7 +40,7 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         event.getPlayer().sendMessage("hey tijger, welkom");
         ItemStack axe = new ItemStack(Material.WOODEN_AXE);
-        axe.addUnsafeEnchantment(CustomEnchants.HEMORRHAGE, 1);
+        //axe.addUnsafeEnchantment(CustomEnchants.HEMORRHAGE, 1);
         event.getPlayer().getInventory().setItemInMainHand(axe);
     }
     @EventHandler
@@ -60,7 +60,12 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onEnchant(EnchantItemEvent event){
-            event.getEnchanter().sendMessage(event.toString());
+            event.getEnchanter().sendMessage("player: "+ event.getEnchanter());
+            event.getEnchanter().sendMessage("item: " +event.getItem());
+            event.getEnchanter().sendMessage("eventname: "+ event.getEventName());
+            event.getEnchanter().sendMessage("enchants to add: "+ event.getEnchantsToAdd());
+            event.getEnchanter().sendMessage("block: "+ event.getEnchantBlock());
+            event.getEnchanter().sendMessage("handlers: "+ event.getHandlers());
     }
     
     public static CustomEnchantsPlugin getPlugin(){
