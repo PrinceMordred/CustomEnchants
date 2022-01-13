@@ -54,7 +54,7 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     public void onEnchant(PrepareItemEnchantEvent event){
         if(event.getEnchanter().getInventory().getItemInMainHand().getType().equals(Material.DIAMOND_AXE)){
             event.getEnchanter().sendMessage("nice axe bro");
-            event.getOffers()[1] = new EnchantmentOffer(CustomEnchants.HEMORRHAGE, 1, 69);
+            event.getOffers()[1] = new EnchantmentOffer(Enchantment.DIG_SPEED, 7, 69);
         }
     }
     public static CustomEnchantsPlugin getPlugin(){
