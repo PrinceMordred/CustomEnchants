@@ -12,9 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
@@ -38,8 +36,8 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event){
-        if(event.getDamager() instanceof Player player){
-            if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
+        if(event.getDamager() instanceof Player){
+            if(((Player)(event.getDamager())).getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.HEMORRHAGE)){
                 event.getEntity().setGlowing(true);
             }
         }
