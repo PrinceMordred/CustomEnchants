@@ -15,6 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
 
 public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
@@ -60,12 +64,9 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onEnchant(EnchantItemEvent event){
-            event.getEnchanter().sendMessage("player: "+ event.getEnchanter());
-            event.getEnchanter().sendMessage("item: " +event.getItem());
-            event.getEnchanter().sendMessage("eventname: "+ event.getEventName());
-            event.getEnchanter().sendMessage("enchants to add: "+ event.getEnchantsToAdd());
-            event.getEnchanter().sendMessage("block: "+ event.getEnchantBlock());
-            event.getEnchanter().sendMessage("handlers: "+ event.getHandlers());
+            Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
+            oldEnchantMap.put(CustomEnchants.HEMORRHAGE, 1);
+
     }
     
     public static CustomEnchantsPlugin getPlugin(){
