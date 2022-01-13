@@ -28,7 +28,7 @@ public class EnchantmentWrapper extends Enchantment {
 
     @Override
     public int getStartLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
