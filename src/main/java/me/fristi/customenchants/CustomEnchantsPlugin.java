@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
@@ -34,6 +35,13 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
     }
 
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event){
+        event.getPlayer().sendMessage("hey tijger, welkom");
+        ItemStack axe = new ItemStack(Material.WOODEN_AXE);
+        axe.addUnsafeEnchantment(CustomEnchants.HEMORRHAGE, 1);
+        event.getPlayer().getInventory().setItemInMainHand(axe);
+    }
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event){
         if(event.getDamager() instanceof Player){
