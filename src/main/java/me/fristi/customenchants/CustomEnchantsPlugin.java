@@ -84,11 +84,11 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
             clickedItem.setItemMeta(meta);
         }
         if (event.getInventory().getType() == InventoryType.ANVIL && event.getSlotType() == InventoryType.SlotType.RESULT) {
-            ItemStack current = event.getCurrentItem();
-            event.getWhoClicked().sendMessage("lol2");
-            clickedItem.addEnchantment(CustomEnchantsManager.HEMORRHAGE, 1);
-            AddLore(clickedItem, ChatColor.AQUA, "click");
-            AddLore(current, ChatColor.AQUA, "current");
+            if (clickedItem.getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE)){
+                ItemStack current = event.getCurrentItem();
+                event.getWhoClicked().sendMessage("lol2");
+                current.addUnsafeEnchantment(CustomEnchantsManager.HEMORRHAGE, clickedItem.getEnchantmentLevel(CustomEnchantsManager.HEMORRHAGE));
+            }
         }
     }
 
@@ -98,7 +98,7 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
     public void AddLore(ItemStack item, ChatColor chatColor, String lore){
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> Lore = new ArrayList<>();
-        Lore.add(ChatColor.DARK_PURPLE + lore +" "+ level);
+        Lore.add(chatColor + lore +" "+ level);
         meta.setLore(Lore);
         item.setItemMeta(meta);
     }
