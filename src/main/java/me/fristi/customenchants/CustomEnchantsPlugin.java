@@ -73,7 +73,6 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
         oldEnchantMap.put(CustomEnchantsManager.HEMORRHAGE, level);
         AddLore(event.getItem(), ChatColor.DARK_PURPLE, "AIDS " + level);
-
     }
     @EventHandler
     public void invClick(InventoryClickEvent event) {
@@ -99,17 +98,18 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
             AddLore(event.getResult(), ChatColor.AQUA, "AIDS "+ newLvl);
         }
     }
+
     private int Random(int min, int max){
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
-    public void AddLore(ItemStack item, ChatColor chatColor, String lore){
+    private void AddLore(ItemStack item, ChatColor chatColor, String lore){
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> Lore = new ArrayList<>();
         Lore.add(chatColor+ lore);
         meta.setLore(Lore);
         item.setItemMeta(meta);
     }
-    public void RemoveLore(ItemStack item){
+    private void RemoveLore(ItemStack item){
         ItemMeta meta = item.getItemMeta();
         meta.setLore(null);
         item.setItemMeta(meta);
