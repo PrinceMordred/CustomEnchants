@@ -14,6 +14,7 @@ import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -71,7 +72,7 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         event.getEnchanter().setExp(event.getEnchanter().getExp() - diff);
         Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
         oldEnchantMap.put(CustomEnchantsManager.HEMORRHAGE, level);
-        AddLore(event.getItem(), ChatColor.DARK_PURPLE, "AIDS");
+        AddLore(event.getItem(), ChatColor.DARK_PURPLE, "AIDS " + level);
 
     }
     @EventHandler
@@ -79,27 +80,38 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         ItemStack clickedItem = event.getCurrentItem();
         if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT) {
             event.getWhoClicked().sendMessage("lol");
-            ItemMeta meta = clickedItem.getItemMeta();
-            meta.setLore(new ArrayList<>());
-            clickedItem.setItemMeta(meta);
-        }
-        if (event.getInventory().getType() == InventoryType.ANVIL && event.getSlotType() == InventoryType.SlotType.RESULT) {
-            if (clickedItem.getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE)){
-                ItemStack current = event.getCurrentItem();
-                event.getWhoClicked().sendMessage("lol2");
-                current.addUnsafeEnchantment(CustomEnchantsManager.HEMORRHAGE, clickedItem.getEnchantmentLevel(CustomEnchantsManager.HEMORRHAGE));
-            }
+            RemoveLore(clickedItem);
         }
     }
 
+    @EventHandler
+    // TODO fix the level sys
+    public void AnvilEvent(PrepareAnvilEvent event){
+        if(event.getInventory().getItem(0).getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE) || event.getInventory().getItem(0).getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE)) {
+            int newLvl = 1;
+            if(!(event.getInventory().getItem(0) == null) && event.getInventory().getItem(0).getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE)){
+                newLvl = event.getInventory().getItem(0).getEnchantmentLevel(CustomEnchantsManager.HEMORRHAGE);
+                if(!(event.getInventory().getItem(1) == null) &&event.getInventory().getItem(1).getEnchantments().containsKey(CustomEnchantsManager.HEMORRHAGE)){
+                    newLvl += 1;
+                }
+            }
+            event.getResult().addUnsafeEnchantment(CustomEnchantsManager.HEMORRHAGE, newLvl);
+            AddLore(event.getResult(), ChatColor.AQUA, "AIDS "+ newLvl);
+        }
+    }
     private int Random(int min, int max){
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
     public void AddLore(ItemStack item, ChatColor chatColor, String lore){
         ItemMeta meta = item.getItemMeta();
         ArrayList<String> Lore = new ArrayList<>();
-        Lore.add(chatColor + lore +" "+ level);
+        Lore.add(chatColor+ lore);
         meta.setLore(Lore);
+        item.setItemMeta(meta);
+    }
+    public void RemoveLore(ItemStack item){
+        ItemMeta meta = item.getItemMeta();
+        meta.setLore(null);
         item.setItemMeta(meta);
     }
 }
