@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
@@ -70,23 +71,35 @@ public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
         event.getEnchanter().setExp(event.getEnchanter().getExp() - diff);
         Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
         oldEnchantMap.put(CustomEnchantsManager.HEMORRHAGE, level);
+        AddLore(event.getItem(), ChatColor.DARK_PURPLE, "AIDS");
 
-        // Get current lore
-        ItemStack item = event.getItem();
-        ItemMeta meta = item.getItemMeta();
-        ArrayList<String> lore = new ArrayList<>();
-        // Update lore
-        lore.add(ChatColor.DARK_PURPLE + "Hemorrhage "+ level);
-        meta.setLore(lore);
-        item.setItemMeta(meta);
     }
     @EventHandler
-    public void grindStoneClick(InventoryClickEvent event) {
-        if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT)
-            event.getCursor().getItemMeta().setLore(new ArrayList<>());
+    public void invClick(InventoryClickEvent event) {
+        ItemStack clickedItem = event.getCurrentItem();
+        if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE && event.getSlotType() == InventoryType.SlotType.RESULT) {
+            event.getWhoClicked().sendMessage("lol");
+            ItemMeta meta = clickedItem.getItemMeta();
+            meta.setLore(new ArrayList<>());
+            clickedItem.setItemMeta(meta);
+        }
+        if (event.getInventory().getType() == InventoryType.ANVIL && event.getSlotType() == InventoryType.SlotType.RESULT) {
+            ItemStack current = event.getCurrentItem();
+            event.getWhoClicked().sendMessage("lol2");
+            clickedItem.addEnchantment(CustomEnchantsManager.HEMORRHAGE, 1);
+            AddLore(clickedItem, ChatColor.AQUA, "click");
+            AddLore(current, ChatColor.AQUA, "current");
+        }
     }
 
     private int Random(int min, int max){
         return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+    public void AddLore(ItemStack item, ChatColor chatColor, String lore){
+        ItemMeta meta = item.getItemMeta();
+        ArrayList<String> Lore = new ArrayList<>();
+        Lore.add(ChatColor.DARK_PURPLE + lore +" "+ level);
+        meta.setLore(Lore);
+        item.setItemMeta(meta);
     }
 }
