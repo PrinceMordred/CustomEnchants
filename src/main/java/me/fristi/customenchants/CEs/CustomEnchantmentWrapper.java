@@ -1,19 +1,24 @@
 package me.fristi.customenchants.CEs;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 
-public class EnchantmentWrapper extends Enchantment {
+public class CustomEnchantmentWrapper extends Enchantment {
 
     private final String name;
     private final int maxLvl;
+    private final boolean isTreasure;
+    private final boolean isCursed;
 
-    public EnchantmentWrapper(String namespace, String name, int lvl) {
+    public CustomEnchantmentWrapper(String namespace, String name, int maxLvl, boolean isTreasure, boolean isCursed) {
         super(NamespacedKey.minecraft(namespace));
         this.name = name;
-        this.maxLvl = lvl;
+        this.maxLvl = maxLvl;
+        this.isTreasure = isTreasure;
+        this.isCursed = isCursed;
     }
 
     @Override
@@ -33,17 +38,17 @@ public class EnchantmentWrapper extends Enchantment {
 
     @Override
     public EnchantmentTarget getItemTarget() {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public boolean isTreasure() {
-        return false;
+        return isTreasure;
     }
 
     @Override
     public boolean isCursed() {
-        return false;
+        return isCursed;
     }
 
     @Override
