@@ -22,7 +22,7 @@ public class CustomEnchantmentWrapper extends Enchantment {
     }
 
     @Override
-    public String getName() {
+    public String getName() { //TODO is dit nodig?
         return name;
     }
 
@@ -38,7 +38,7 @@ public class CustomEnchantmentWrapper extends Enchantment {
 
     @Override
     public EnchantmentTarget getItemTarget() {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); //TODO niet netjes of wel
     }
 
     @Override
