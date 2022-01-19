@@ -3,6 +3,7 @@ package me.fristi.customenchants;
 import me.fristi.customenchants.CEs.CustomEnchantment;
 import me.fristi.customenchants.CEs.Grappling;
 import me.fristi.customenchants.CEs.Hemorrhage;
+import me.fristi.customenchants.CEs.Hentai;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -24,7 +25,7 @@ import java.util.*;
 
 public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
-    public static final CustomEnchantment[] Enchantments = { new Hemorrhage(), new Grappling() };
+    public static final CustomEnchantment[] Enchantments = { new Hemorrhage(), new Grappling(), new Hentai() };
 
     @Override
     public void onEnable() {
