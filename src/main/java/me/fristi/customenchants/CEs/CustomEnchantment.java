@@ -1,6 +1,7 @@
 package me.fristi.customenchants.CEs;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -12,6 +13,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -32,9 +35,9 @@ public abstract class CustomEnchantment extends CustomEnchantmentWrapper {
         return i.getItemMeta() != null && i.getItemMeta().hasEnchant(e);
     }
     protected final void AddLoreToItem(ItemStack item, ChatColor chatColor, String lore){
-        ItemMeta meta = item.getItemMeta();
         ArrayList<String> Lore = new ArrayList<>();
         Lore.add(chatColor+ lore);
+        ItemMeta meta = item.getItemMeta();
         meta.setLore(Lore);
         item.setItemMeta(meta);
     }
@@ -42,6 +45,9 @@ public abstract class CustomEnchantment extends CustomEnchantmentWrapper {
         ItemMeta meta = item.getItemMeta();
         meta.setLore(null);
         item.setItemMeta(meta);
+    }
+    protected Vector CreateDistanceVector(Location origin, Location head){
+        return head.toVector().subtract(origin.toVector());
     }
 
 
@@ -69,7 +75,10 @@ public abstract class CustomEnchantment extends CustomEnchantmentWrapper {
         event.getEnchanter().setExp(event.getEnchanter().getExp() - diff);
         Map<Enchantment, Integer> oldEnchantMap = event.getEnchantsToAdd();
         oldEnchantMap.put(this, level);
-        AddLoreToItem(event.getItem(), ChatColor.DARK_PURPLE, getName() + ' ' + level);
+
+        String lore = getName();
+        if (level > 1) lore += ' ' + level;
+        AddLoreToItem(event.getItem(), ChatColor.DARK_PURPLE, lore);
     }
 
     private void InventoryClick(InventoryClickEvent event) { //TODO: nullReferenceExceptions kunnen overal in dit project optreden

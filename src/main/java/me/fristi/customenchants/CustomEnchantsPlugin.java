@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.enchantments.Enchantment;
 
@@ -25,11 +26,13 @@ import java.util.*;
 
 public class CustomEnchantsPlugin extends JavaPlugin implements Listener {
 
-    public static final CustomEnchantment[] Enchantments = { new Hemorrhage(), new Grappling(), new Hentai() };
+    public static CustomEnchantsPlugin GetPluginReference;
+    public final CustomEnchantment[] Enchantments = { new Hemorrhage(), new Grappling(), new Hentai() };
 
     @Override
     public void onEnable() {
         registerEnchantments();
+        GetPluginReference = this;
         this.getServer().getPluginManager().registerEvents(this, this);
     }
     private void registerEnchantments(){
